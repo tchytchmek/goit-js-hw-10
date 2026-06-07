@@ -10,7 +10,7 @@ const form = document.querySelector('form');
 
 const fieldset = document.querySelector('fieldset');
 
-form.addEventListener('submit', () => {
+form.addEventListener('submit', (event) => {
     event.preventDefault();
 const promise = new Promise((resolve , reject) => {
  setTimeout(() =>{
