@@ -1,5 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -32,20 +34,30 @@ const options = {
       userSelectedDate = selectedDates[0];
     }else{
       startButton.disabled = true;
-      window.alert("Please choose a date in the future");
+      iziToast.show({
+      title: 'WRONG INPUT',
+      message: 'Choose Date In The Future',
+      color: 'red'
+});
     }
     console.log(selectedDates[0]);
   },
 };
 
+function addLeadingZero(value){
+  value = value.toString();
+  return value.padStart(2, "0");
+}
+
 let userSelectedDate;
+
 const dateInput = document.querySelector('#datetime-picker');
 const startButton = document.querySelector('button');
-const days = document.querySelector('.value.dataset.days');
 
-console.log(days);
-console.log(dateInput);
-console.log(startButton.dataset.start);
+const days = document.querySelector('[data-days]');
+const hours = document.querySelector('[data-hours]');
+const minutes = document.querySelector('[data-minutes]');
+const seconds = document.querySelector('[data-seconds]');
 
 flatpickr(dateInput, options);
 
@@ -60,12 +72,19 @@ startButton.addEventListener('click' , () => {
   const timerTime = targetTime - currentTime;
 
   const convertedTime = convertMs(timerTime);
+
   console.log(`${convertedTime.days}:${convertedTime.hours}:${convertedTime.minutes}:${convertedTime.seconds}`)
 
+  days.textContent = addLeadingZero(convertedTime.days);
+  hours.textContent = addLeadingZero(convertedTime.hours);
+  minutes.textContent = addLeadingZero(convertedTime.minutes);
+  seconds.textContent = addLeadingZero(convertedTime.seconds);
  
+  startButton.disabled = true;
 
   if(convertedTime.days == 0 && convertedTime.hours == 0 && convertedTime.minutes == 0 && convertedTime.seconds == 0){
     clearInterval(timerId);
+    startButton.disabled = false;
   }
   }, 1000);
  
