@@ -17,22 +17,22 @@ const promise = new Promise((resolve , reject) => {
    const checkedRadio = document.querySelector('[type="radio"]:checked');
    console.log(checkedRadio.value);
    if(checkedRadio.value == 'fulfilled'){
-    resolve();
+    resolve(delay.value);
    }else{
-    reject();
+    reject(delay.value);
    }
 } , delay.value);
 });
 
 promise.then(value => {
          iziToast.show({
-      message: `Fulfilled promise in ${delay.value}ms`,
+      message: `Fulfilled promise in ${value}ms`,
       color: 'green'
 });
      })
        .catch(error =>{
         iziToast.show({
-      message: `Rejected promise in ${delay.value}ms`,
+      message: `Rejected promise in ${error}ms`,
       color: 'red'
 });
        })
