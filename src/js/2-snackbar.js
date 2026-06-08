@@ -12,16 +12,22 @@ const fieldset = document.querySelector('fieldset');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+
+   const delayInput = form.elements.delay;
+   const stateInput = form.elements.state;
+
+   const delay = Number(delayInput.value);
+   const state = stateInput.value;
+
 const promise = new Promise((resolve , reject) => {
  setTimeout(() =>{
-   const checkedRadio = document.querySelector('[type="radio"]:checked');
-   console.log(checkedRadio.value);
-   if(checkedRadio.value == 'fulfilled'){
-    resolve(delay.value);
+   console.log(state);
+   if(state == 'fulfilled'){
+    resolve(delay);
    }else{
-    reject(delay.value);
+    reject(delay);
    }
-} , delay.value);
+} , delay);
 });
 
 promise.then(value => {
