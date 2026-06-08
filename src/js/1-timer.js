@@ -29,14 +29,14 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const date = new Date();
-    if(selectedDates[0] >= date){
+    if(selectedDates[0] > date){
       startButton.disabled = false;
       userSelectedDate = selectedDates[0];
     }else{
       startButton.disabled = true;
       iziToast.show({
       title: 'WRONG INPUT',
-      message: 'Choose Date In The Future',
+      message: 'Please choose a date in the future',
       color: 'red'
 });
     }
@@ -63,6 +63,7 @@ flatpickr(dateInput, options);
 
 startButton.addEventListener('click' , () => {
   startButton.disabled = true;
+  dateInput.disabled = true;
 
  const timerId = setInterval(() => {
  const targetTime = userSelectedDate.getTime();
@@ -82,9 +83,9 @@ startButton.addEventListener('click' , () => {
  
   startButton.disabled = true;
 
-  if(convertedTime.days == 0 && convertedTime.hours == 0 && convertedTime.minutes == 0 && convertedTime.seconds == 0){
+  if(convertedTime.days <= 0 && convertedTime.hours <= 0 && convertedTime.minutes <= 0 && convertedTime.seconds <= 0){
     clearInterval(timerId);
-    startButton.disabled = false;
+    dateInput.disabled = false;
   }
   }, 1000);
  
